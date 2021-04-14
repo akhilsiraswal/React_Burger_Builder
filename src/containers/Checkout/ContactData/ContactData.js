@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+
 import Button from "../../../components/UI/Button/Button";
-import axios from "../../../axios-orders";
-import classes from "./ContactData.css";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import classes from "./ContactData.css";
+import axios from "../../../axios-orders";
 
 class ContactData extends Component {
   state = {
@@ -17,24 +18,21 @@ class ContactData extends Component {
 
   orderHandler = (event) => {
     event.preventDefault();
-
     this.setState({ loading: true });
-    // alert("You continue!");
     const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.price,
+      ingredients: this.props.ingredients,
+      price: this.props.price,
       customer: {
-        name: "Akhil",
+        name: "Max Schwarzmüller",
         address: {
-          street: "TestStreet",
-          zipcode: "12345",
-          country: "India",
+          street: "Teststreet 1",
+          zipCode: "41351",
+          country: "Germany",
         },
         email: "test@test.com",
       },
       deliveryMethod: "fastest",
     };
-
     axios
       .post("/orders.json", order)
       .then((response) => {
@@ -45,6 +43,7 @@ class ContactData extends Component {
         this.setState({ loading: false });
       });
   };
+
   render() {
     let form = (
       <form>
@@ -52,25 +51,25 @@ class ContactData extends Component {
           className={classes.Input}
           type="text"
           name="name"
-          placeholder="Your name.."
+          placeholder="Your Name"
         />
         <input
           className={classes.Input}
           type="email"
           name="email"
-          placeholder="Your Mail.."
+          placeholder="Your Mail"
         />
         <input
           className={classes.Input}
           type="text"
           name="street"
-          placeholder="Street.."
+          placeholder="Street"
         />
         <input
           className={classes.Input}
           type="text"
           name="postal"
-          placeholder="Postal Code.."
+          placeholder="Postal Code"
         />
         <Button btnType="Success" clicked={this.orderHandler}>
           ORDER
